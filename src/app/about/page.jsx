@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from 'react';
 import { useUser } from '@clerk/clerk-react';
-
+import AlertSOSComponent from '@/components/AlertButton/AlertButton';
 export default function AboutPage() {
   const { isSignedIn, user, isLoaded } = useUser();
 
@@ -56,7 +56,6 @@ export default function AboutPage() {
           Experience a new era in healthcare where advanced AI technology enhances communication between patients and doctors, making healthcare more accessible and efficient.
         </p>
       </header>
-
       <section className="px-4 py-12 bg-gray-800">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-semibold text-yellow-400 mb-6">Our Vision</h2>

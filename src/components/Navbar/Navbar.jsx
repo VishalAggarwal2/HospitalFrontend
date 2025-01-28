@@ -6,7 +6,9 @@ import {
   } from '@clerk/nextjs';
   import React from 'react';
   import Link from 'next/link';
-  
+  import AlertSOSComponent from '../AlertButton/AlertButton';
+
+
   export default function Navbar() {
     return (
       <nav className="bg-gray-900 text-white p-4 flex justify-between items-center shadow-md">
@@ -45,16 +47,27 @@ import {
           <Link href="/domain" className="hover:text-teal-400 transition duration-300">
             DomainFAQ
           </Link>
+          <Link href="/Counslingsession" className="hover:text-teal-400 transition duration-300">
+            Analyzer
+          </Link>
 
           <Link href="/Counslingsession/mySession" className="hover:text-teal-400 transition duration-300">
             My History
           </Link>
 
-          <Link href="/Counslingsession" className="hover:text-teal-400 transition duration-300">
-            Analyzer
+          <Link href="/Counslingsession/mySession" className="hover:text-teal-400 transition duration-300">
+            My History
+          </Link>   
+          <Link href="/sos" className="hover:text-teal-400 transition duration-300">
+            Add SOS Person
+          </Link>
+          <Link href="/sos/getSosList" className="hover:text-teal-400 transition duration-300">
+             All My SOS Person
           </Link>
 
-     
+<div>
+  <AlertSOSComponent></AlertSOSComponent>
+</div>
 
             <UserButton />
           </SignedIn>
