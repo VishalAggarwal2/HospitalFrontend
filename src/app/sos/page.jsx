@@ -1,11 +1,13 @@
 "use client"
 import React, { useState, useEffect } from "react";
+import { Particles } from "../../components/ui/particles";
 
 const AddSOSPage = () => {
   const [userId, setUserId] = useState("");
   const [email, setEmail] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
   const [error, setError] = useState("");
+  const [color, setColor] = useState("#ffffff");
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
@@ -37,7 +39,7 @@ const AddSOSPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black text-white">
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
       <div className="w-full max-w-md p-6 rounded-lg shadow-lg bg-gray-900">
         <h1 className="text-2xl font-bold text-blue-500 mb-4">Add SOS Person</h1>
         <form onSubmit={handleSubmit}>
@@ -54,6 +56,13 @@ const AddSOSPage = () => {
               required
             />
           </div>
+          <Particles
+        className="absolute inset-0 z-0"
+        quantity={100}
+        ease={80}
+        color={color}
+        refresh
+      />
           <button
             type="submit"
             className="w-full py-2 px-4 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"

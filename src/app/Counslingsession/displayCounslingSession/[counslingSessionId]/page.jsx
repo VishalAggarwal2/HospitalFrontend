@@ -94,7 +94,7 @@ export default function SessionDetails() {
   }
 
   return (
-    <div className="bg-black min-h-screen text-white p-6">
+    <div className="bg-gray-900 min-h-screen text-white p-6">
       <div className="bg-gray-800 shadow-lg rounded-lg p-6 max-w-3xl mx-auto">
         <h1 className="text-3xl font-semibold mb-6 text-blue-500">Session Details</h1>
         <div className="space-y-6">

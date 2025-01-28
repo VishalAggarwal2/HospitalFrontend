@@ -1,10 +1,13 @@
 'use client'; // Required for client-side fetching in Next.js App Router
 import React, { useEffect, useState } from 'react';
+import { Particles } from "../../components/ui/particles";
+
 import Link from 'next/link';
 export default function Page() {
   const [domains, setDomains] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [color, setColor] = useState("#ffffff");
 
   useEffect(() => {
     const fetchDomains = async () => {
@@ -28,11 +31,18 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black p-8 text-white">
+    <div className="min-h-screen bg-gray-900 p-8 text-white">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold text-center mb-6 text-blue-500">
           Domain List
         </h1>
+        <Particles
+        className="absolute inset-0 z-0"
+        quantity={100}
+        ease={80}
+        color={color}
+        refresh
+      />
 
         {loading && (
           <div className="text-center">

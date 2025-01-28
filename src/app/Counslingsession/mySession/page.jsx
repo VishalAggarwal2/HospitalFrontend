@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useUser } from '@clerk/clerk-react';
+import { Particles } from "../../../components/ui/particles";
 
 export default function MySessionPage() {
   const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [color, setColor] = useState("#ffffff");
 
   const { isSignedIn, user, isLoaded } = useUser();
 
@@ -78,7 +80,7 @@ export default function MySessionPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col items-center py-10 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center py-10 px-4 sm:px-6 lg:px-8">
       <h1 className="text-3xl font-bold text-blue-500 mb-8">My Sessions</h1>
       {loading ? (
         <p className="text-blue-300 text-xl">Loading sessions...</p>
@@ -109,6 +111,13 @@ export default function MySessionPage() {
           ))}
         </div>
       )}
+          <Particles
+        className="absolute inset-0 z-0"
+        quantity={100}
+        ease={80}
+        color={color}
+        refresh
+      />
     </div>
   );
 }

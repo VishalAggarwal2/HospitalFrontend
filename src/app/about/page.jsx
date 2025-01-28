@@ -1,24 +1,27 @@
-"use client";
-import React, { useEffect } from 'react';
+"use client"
+import { GlobeDemo } from '@/components/Globe/GlobeDemo';
 import { useUser } from '@clerk/clerk-react';
+import { useEffect ,useState} from 'react';
 import AlertSOSComponent from '@/components/AlertButton/AlertButton';
+import { TextAnimate } from "../../components/ui/text-animate";
+import { Particles } from "../../components/ui/particles";
+ 
 export default function AboutPage() {
   const { isSignedIn, user, isLoaded } = useUser();
-
+  const [color, setColor] = useState("#ffffff");
+ 
   useEffect(() => {
     if (isLoaded && isSignedIn && user) {
       console.log(user.id);      
       console.log(user.fullName);
       console.log(user.primaryEmailAddress.emailAddress);
 
-      // Prepare data to send in POST request
       const obj = {
         username: user.fullName,
         email: user.primaryEmailAddress.emailAddress,
         password: "devuser"
       };
 
-      // Send POST request
       fetch(`${process.env.NEXT_PUBLIC_API}/auth/signup`, {
         method: 'POST',
         headers: {
@@ -34,34 +37,52 @@ export default function AboutPage() {
           console.error('Error:', error);
         });
 
-      // Fetch userId after signup and store it in localStorage
       fetch(`${process.env.NEXT_PUBLIC_API}/auth/${user.primaryEmailAddress.emailAddress}`)
         .then((response) => response.json())
         .then((result) => {
-          localStorage.setItem('userId', result.data); // Corrected localStorage usage
+          localStorage.setItem('userId', result.data); 
         })
         .catch((error) => {
           console.error('Error fetching user ID:', error);
         });
     }
-  }, [isLoaded, isSignedIn, user]); // Watch for changes in user and isLoaded
+  }, [isLoaded, isSignedIn, user]);
 
   return (
-    <div className="bg-black text-white font-sans">
-      <header className="bg-cover bg-center h-[500px] flex flex-col justify-center items-center text-center p-8 transition-all duration-1000 ease-in-out"
-        style={{ backgroundImage: "url('https://via.placeholder.com/1920x600/000000/FFFFFF?text=AI+Healthcare+Innovation')" }}>
-        <h1 className="text-5xl md:text-6xl font-extrabold text-teal-300 text-shadow-lg drop-shadow-lg animate__animated animate__fadeIn">AI-Powered Healthcare Chatbot</h1>
-        <p className="text-xl mt-4 text-white md:text-2xl animate__animated animate__fadeIn animate__delay-1s">
-          Transforming Healthcare with Intelligent Conversations
-          Experience a new era in healthcare where advanced AI technology enhances communication between patients and doctors, making healthcare more accessible and efficient.
-        </p>
-      </header>
+    <div className="bg-gray-900 text-white font-sans">
+<div className="flex justify-center items-center h-[500px] bg-gradient-to-r from-gray-900 text-4xl font-extrabold text-teal-300 text-center tracking-wide leading-tight via-black to-gray-900 rounded-lg shadow-lg p-8">
+<TextAnimate 
+    animation="blurInUp" 
+    by="word" 
+    className="text-3xl font-extrabold  text-teal-300 text-center tracking-wide leading-tight"
+  >
+    AI-Powered Healthcare Chatbot
+    </TextAnimate>
+
+  <GlobeDemo />
+  <Particles
+        className="absolute inset-0 z-0"
+        quantity={100}
+        ease={80}
+        color={color}
+        refresh
+      />
+</div>
+
+
+
       <section className="px-4 py-12 bg-gray-800">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-semibold text-yellow-400 mb-6">Our Vision</h2>
-          <p className="text-lg text-gray-200 leading-relaxed animate__animated animate__fadeIn animate__delay-2s">
-            At the forefront of healthcare innovation, our vision is to empower patients and medical professionals alike. By harnessing the power of AI-driven technology, we aim to provide instant, accurate responses to common health inquiries. This allows healthcare providers to dedicate more time to complex cases while ensuring that patients receive timely information. Our chatbot not only enhances accessibility but also fosters a more satisfying healthcare experience for everyone involved.
-          </p>
+        
+          <TextAnimate 
+    animation="blurInUp" 
+    by="word" 
+    className="text-3xl font-extrabold  text-white text-center tracking-wide leading-tight"
+  >
+            At the forefront of healthcare innovation, our vision is to empower patients and medical professionals alike...
+            </TextAnimate>
+         
         </div>
       </section>
 
@@ -75,17 +96,17 @@ export default function AboutPage() {
             {
               emoji: "🤖",
               title: "AI-Powered FAQ Generation",
-              description: "Our intelligent chatbot learns from real doctor-patient interactions to create a comprehensive FAQ database. By addressing common concerns proactively, it reduces repetitive queries and empowers patients with the information they need."
+              description: "Our intelligent chatbot learns from real doctor-patient interactions..."
             },
             {
               emoji: "🏥",
               title: "Domain-Specific Categorization",
-              description: "Navigate your health concerns effortlessly! Our FAQs are meticulously categorized across various medical specialties—such as oncology, cardiology, and orthopedics—ensuring that you receive precise answers tailored to your specific needs."
+              description: "Navigate your health concerns effortlessly..."
             },
             {
               emoji: "💬",
               title: "Interactive Patient Interface",
-              description: "Engage directly with our user-friendly chatbot for real-time responses. This interactive platform enhances your understanding of health topics while providing you with immediate access to vital information about your well-being."
+              description: "Engage directly with our user-friendly chatbot for real-time responses..."
             }
           ].map((feature) => (
             <div key={feature.title} className="bg-gray-800 p-8 rounded-lg shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl duration-300 ease-in-out">
@@ -100,7 +121,7 @@ export default function AboutPage() {
       {/* Call to Action Section */}
       <section className="bg-gray-900 py-12 text-center">
         <h2 className="text-3xl font-semibold mb-4 text-yellow-400">Join Us in Revolutionizing Healthcare</h2>
-        <p className="text-lg mb-6">Become a pioneer in the future of healthcare! Partner with us as we leverage AI technology to enhance accessibility and improve patient outcomes. Together, we can create a healthier tomorrow for everyone.</p>
+        <p className="text-lg mb-6">Become a pioneer in the future of healthcare! Partner with us as we leverage AI technology...</p>
         <a href="#contact" className="bg-teal-500 text-white py-3 px-8 rounded-full text-xl hover:bg-teal-600 transition-all transform hover:scale-110 duration-300 ease-in-out">
           Contact Us
         </a>

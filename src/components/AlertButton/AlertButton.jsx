@@ -60,7 +60,7 @@ const AlertSOSComponent = () => {
   }, [isRinging]);
 
   return (
-    <div className="flex items-center justify-center bg-black text-white">
+    <div className="flex items-center justify-center bg-gray-900 text-white">
       <div className="w-full max-w-md p-6 rounded-lg shadow-lg bg-gray-900">
         {isRinging ? (
           <div>

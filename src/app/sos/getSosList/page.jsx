@@ -1,9 +1,11 @@
 "use client"
 import React, { useState, useEffect } from "react";
+import { Particles } from "../../../components/ui/particles";
 
 const SOSListPage = () => {
   const [sosList, setSosList] = useState([]);
   const [error, setError] = useState("");
+  const [color, setColor] = useState("#ffffff");
 
   const fetchSOSList = async (userId) => {
     try {   
@@ -36,7 +38,7 @@ const SOSListPage = () => {
 
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black text-white">
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
       <div className="w-full max-w-md p-6 rounded-lg shadow-lg bg-gray-900">
         <h1 className="text-2xl font-bold text-blue-500 mb-4">SOS List</h1>
         {error && <p className="text-red-400 mb-4">{error}</p>}
@@ -55,6 +57,13 @@ const SOSListPage = () => {
           <p className="text-blue-400">No SOS entries found.</p>
         )}
       </div>
+      <Particles
+        className="absolute inset-0 z-0"
+        quantity={100}
+        ease={80}
+        color={color}
+        refresh
+      />
     </div>
   );
 };

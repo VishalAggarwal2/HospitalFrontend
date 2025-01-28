@@ -1,11 +1,13 @@
 "use client";
 import { useState } from "react";
+import { Particles } from "../../components/ui/particles";
 
 export default function Home() {
   const [userInput, setUserInput] = useState("");
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [language, setLanguage] = useState("English"); // State for language selection
+  const [color, setColor] = useState("#ffffff");
 
   const sendMessage = async () => {
     if (userInput.trim() !== "") {
@@ -52,9 +54,16 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-black py-10">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 py-10">
       <h1 className="text-3xl font-bold text-white mb-6">Medical ChatBot</h1>
       <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md">
+      <Particles
+        className="absolute inset-0 z-0"
+        quantity={100}
+        ease={80}
+        color={color}
+        refresh
+      />
         {/* Language Selection Dropdown */}
         <div className="flex justify-end mb-4">
           <select

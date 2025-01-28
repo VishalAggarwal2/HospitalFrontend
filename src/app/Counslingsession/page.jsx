@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@clerk/clerk-react';
+import { Particles } from "../../components/ui/particles";
 
 export default function Page() {
   const { isSignedIn, user, isLoaded } = useUser();
@@ -57,6 +58,7 @@ export default function Page() {
   const [isCreating, setIsCreating] = useState(false); // For loader in create session
   const [isAnalyzing, setIsAnalyzing] = useState(false); // For loader in analyze file
   const [language, setLanguage] = useState('English'); // State for language selection
+  const [color, setColor] = useState("#ffffff");
 
   const router = useRouter();
 
@@ -143,7 +145,7 @@ export default function Page() {
 
   const renderAnalysisDetails = (data) => {
     return (
-      <div className="p-4 bg-gray-800 rounded-lg shadow-md mt-6">
+      <div className="p-4 bg-gray-800  rounded-lg shadow-md mt-6" >
         <h3 className="text-xl text-blue-500 font-semibold mb-4">Analysis Result:</h3>
         <div className="text-sm text-gray-400">
           {data.summary && (
@@ -152,6 +154,7 @@ export default function Page() {
               <p>{data.summary}</p>
             </div>
           )}
+
 
           {data.details && (
             <div>
@@ -180,7 +183,7 @@ export default function Page() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-gray-900 text-white rounded-lg shadow-lg">
+    <div className="max-w-4xl mx-auto p-6 bg-gray-900 text-white rounded-lg shadow-lg" style={{minHeight:"100vh",minWidth:"100vw"}}>
       <h1 className="text-3xl text-center text-blue-500 mb-8">Counseling Session</h1>
 
       {/* Error message display */}
@@ -200,7 +203,13 @@ export default function Page() {
           className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg text-white"
         />
       </div>
-
+      <Particles
+        className="absolute inset-0 z-0"
+        quantity={100}
+        ease={80}
+        color={color}
+        refresh
+      />
       <div className="mb-6">
         <label className="block text-lg font-semibold mb-2">Session Name:</label>
         <input

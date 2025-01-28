@@ -2,11 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import LoadingSpinner from '@/components/spinner/LoadingSpinner';
+import { Particles } from "../../../components/ui/particles";
 
 function Page() {
   const [questions, setQuestions] = useState([]);  // Initialize as an empty array
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [color, setColor] = useState("#ffffff");
 
   const { domainId } = useParams(); // Access the dynamic route parameter
 
@@ -45,12 +47,18 @@ function Page() {
   }, [domainId]);
 
   return (
-    <div className="min-h-screen bg-black text-white p-8">
+    <div className="min-h-screen bg-gray-900 text-white p-8">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-5xl font-extrabold text-center mb-8 text-blue-400">
           Frequently Asked Questions
         </h1>
-
+        <Particles
+        className="absolute inset-0 z-0"
+        quantity={100}
+        ease={80}
+        color={color}
+        refresh
+      />
         {loading && (
           <div className="flex justify-center items-center">
             <LoadingSpinner />
