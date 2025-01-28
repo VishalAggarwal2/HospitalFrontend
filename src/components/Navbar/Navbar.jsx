@@ -50,14 +50,9 @@ import {
           <Link href="/Counslingsession" className="hover:text-teal-400 transition duration-300">
             Analyzer
           </Link>
-
           <Link href="/Counslingsession/mySession" className="hover:text-teal-400 transition duration-300">
             My History
           </Link>
-
-          <Link href="/Counslingsession/mySession" className="hover:text-teal-400 transition duration-300">
-            My History
-          </Link>   
           <Link href="/sos" className="hover:text-teal-400 transition duration-300">
             Add SOS Person
           </Link>
@@ -68,8 +63,7 @@ import {
 <div>
   <AlertSOSComponent></AlertSOSComponent>
 </div>
-
-            <UserButton />
+      <UserButton />
           </SignedIn>
         </div>
       </nav>
