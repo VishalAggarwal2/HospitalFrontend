@@ -47,11 +47,11 @@ import {
           </Link>
 
           <Link href="/Counslingsession/mySession" className="hover:text-teal-400 transition duration-300">
-            My Session
+            My History
           </Link>
 
           <Link href="/Counslingsession" className="hover:text-teal-400 transition duration-300">
-            Create Session
+            Analyzer
           </Link>
 
      
