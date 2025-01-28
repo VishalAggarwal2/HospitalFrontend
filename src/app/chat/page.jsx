@@ -5,6 +5,7 @@ export default function Home() {
   const [userInput, setUserInput] = useState("");
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [language, setLanguage] = useState("English"); // State for language selection
 
   const sendMessage = async () => {
     if (userInput.trim() !== "") {
@@ -17,7 +18,7 @@ export default function Home() {
       setIsLoading(true); // Show loader
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API}/chat/${encodeURIComponent(userInput)}`,
+          `${process.env.NEXT_PUBLIC_API}/chat/${encodeURIComponent(userInput)}?language=${language}`, // Pass language in query params
           {
             method: "GET",
           }
@@ -54,6 +55,18 @@ export default function Home() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-black py-10">
       <h1 className="text-3xl font-bold text-white mb-6">Medical ChatBot</h1>
       <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md">
+        {/* Language Selection Dropdown */}
+        <div className="flex justify-end mb-4">
+          <select
+            value={language}
+            onChange={(e) => setLanguage(e.target.value)}
+            className="p-2 bg-gray-700 text-white rounded-lg"
+          >
+            <option value="English">English</option>
+            <option value="Hindi">Hindi</option>
+          </select>
+        </div>
+
         <div className="overflow-y-auto max-h-96 mb-4 space-y-4">
           {messages.map((message, index) => (
             <div
@@ -84,7 +97,7 @@ export default function Home() {
           <button
             onClick={sendMessage}
             className="p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
-          >
+              >
             {isLoading ? "Sending..." : "Send"}
           </button>
         </div>

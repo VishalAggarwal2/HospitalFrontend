@@ -11,7 +11,7 @@ import {
 
   export default function Navbar() {
     return (
-      <nav className="bg-gray-900 text-white p-4 flex justify-between items-center shadow-md">
+      <nav className="bg-gray-900 text-white p-4 flex justify-evenly items-center shadow-md">
         <div className="text-lg font-bold">
           <Link href="/about" className="hover:text-teal-400 transition duration-300">
             Medicos
