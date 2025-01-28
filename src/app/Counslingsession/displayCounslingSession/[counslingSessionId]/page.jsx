@@ -5,12 +5,15 @@ import { useParams } from 'next/navigation';
 export default function SessionDetails() {
   const [sessionData, setSessionData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null); // Add error state
-  const [generatingReport, setGeneratingReport] = useState(false); // State for report generation
-  const [reportError, setReportError] = useState(null); // State for report error
-  const [reportResponse, setReportResponse] = useState(null); // State for storing report response
+  const [error, setError] = useState(null);
+  const [generatingReport, setGeneratingReport] = useState(false);
+  const [reportError, setReportError] = useState(null);
+  const [reportResponse, setReportResponse] = useState(null);
 
-  const { counslingSessionId } = useParams(); // Get session ID from URL
+  const [isSpeaking, setIsSpeaking] = useState(false); // State for speech synthesis
+  const [spokenText, setSpokenText] = useState(null); // State for highlighted text
+  const { counslingSessionId } = useParams();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -32,9 +35,9 @@ export default function SessionDetails() {
 
   // Handle report generation
   const generateReport = async () => {
-    setGeneratingReport(true); 
-    setReportError(null); 
-    setReportResponse(null); 
+    setGeneratingReport(true);
+    setReportError(null);
+    setReportResponse(null);
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API}/counslingsession/generateReport/${counslingSessionId}`);
       if (!response.ok) {
@@ -43,18 +46,37 @@ export default function SessionDetails() {
       const result = await response.json();
 
       if (result.status === 'success') {
-        setReportResponse(result); // Set report response data on success
+        setReportResponse(result);
       } else {
         throw new Error(result.message || 'Failed to generate report');
       }
     } catch (err) {
-      setReportError(err.message); // Capture and display any errors
+      setReportError(err.message);
     } finally {
-      setGeneratingReport(false); // Reset loading state after operation
+      setGeneratingReport(false);
     }
   };
 
-  // Show loading text or the report button based on loading state
+  // Text-to-Voice functionality
+  const speakText = (text) => {
+    if (!text) return;
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.onend = () => {
+      setIsSpeaking(false);
+      setSpokenText(null);
+    };
+    setSpokenText(text);
+    setIsSpeaking(true);
+    speechSynthesis.speak(utterance);
+  };
+
+  const stopSpeaking = () => {
+    speechSynthesis.cancel(); // Stop any ongoing speech
+    setIsSpeaking(false);
+    setSpokenText(null);
+  };
+
+  // Render loading or error states
   if (loading) {
     return <div className="text-center text-white">Loading...</div>;
   }
@@ -84,11 +106,55 @@ export default function SessionDetails() {
           </div>
           <div>
             <span className="font-bold text-blue-400">Summary:</span>
-            <p className="whitespace-pre-line">{sessionData.data.summary}</p>
+            <p
+              className={`whitespace-pre-line ${
+                spokenText === sessionData.data.summary ? 'bg-yellow-200 text-black p-2 rounded' : ''
+              }`}
+            >
+              {sessionData.data.summary}
+            </p>
+            <div className="flex space-x-4 mt-2">
+              <button
+                onClick={() => speakText(sessionData.data.summary)}
+                disabled={isSpeaking}
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200"
+              >
+                {isSpeaking && spokenText === sessionData.data.summary ? 'Speaking...' : 'Read Summary'}
+              </button>
+              <button
+                onClick={stopSpeaking}
+                disabled={!isSpeaking}
+                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-200"
+              >
+                Stop Speaking
+              </button>
+            </div>
           </div>
           <div>
             <span className="font-bold text-blue-400">Precautions:</span>
-            <p className="whitespace-pre-line">{sessionData.data.precautions}</p>
+            <p
+              className={`whitespace-pre-line ${
+                spokenText === sessionData.data.precautions ? 'bg-yellow-200 text-black p-2 rounded' : ''
+              }`}
+            >
+              {sessionData.data.precautions}
+            </p>
+            <div className="flex space-x-4 mt-2">
+              <button
+                onClick={() => speakText(sessionData.data.precautions)}
+                disabled={isSpeaking}
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200"
+              >
+                {isSpeaking && spokenText === sessionData.data.precautions ? 'Speaking...' : 'Read Precautions'}
+              </button>
+              <button
+                onClick={stopSpeaking}
+                disabled={!isSpeaking}
+                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-200"
+              >
+                Stop Speaking
+              </button>
+            </div>
           </div>
 
           <h2 className="text-xl font-semibold mt-6 text-blue-500">Questions</h2>
@@ -101,11 +167,10 @@ export default function SessionDetails() {
             ))}
           </ul>
 
-          {/* General Report Button */}
           <div className="mt-8 text-center">
             <button
               onClick={generateReport}
-              disabled={generatingReport} // Disable the button while generating report
+              disabled={generatingReport}
               className={`p-4 rounded-lg text-white ${generatingReport ? 'bg-gray-500' : 'bg-blue-500'} transition duration-200 hover:bg-blue-600`}
             >
               {generatingReport ? (
@@ -125,11 +190,8 @@ export default function SessionDetails() {
               )}
             </button>
 
-            {reportError && (
-              <p className="text-red-500 mt-4">{reportError}</p>
-            )}
+            {reportError && <p className="text-red-500 mt-4">{reportError}</p>}
 
-            {/* Displaying the report response */}
             {reportResponse && (
               <div className="mt-6 p-4 bg-green-500 text-white rounded-lg">
                 <h2 className="text-xl font-semibold">Report Status: {reportResponse.status}</h2>
@@ -143,3 +205,4 @@ export default function SessionDetails() {
     </div>
   );
 }
+      

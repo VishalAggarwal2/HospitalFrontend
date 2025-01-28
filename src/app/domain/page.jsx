@@ -59,12 +59,11 @@ export default function Page() {
                 key={domain.id}
                 className="bg-gray-800 shadow-lg rounded-lg p-6 hover:bg-gray-700 transition duration-300"
               >
-                <h2 className="text-2xl font-semibold text-white">
+         <Link href={`domain/${domain.id}`}>   
+             <h2 className="text-2xl font-semibold text-white">
                   {domain.domainName}
                 </h2>
-<Link href={`domain/${domain.id}`}>
 Show FAQ
-
 </Link>                
 
               </div>

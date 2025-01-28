@@ -3,14 +3,13 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@clerk/clerk-react';
+
 export default function Page() {
-
-
   const { isSignedIn, user, isLoaded } = useUser();
 
   useEffect(() => {
     if (isLoaded && isSignedIn && user) {
-      console.log(user.id);      
+      console.log(user.id);
       console.log(user.fullName);
       console.log(user.primaryEmailAddress.emailAddress);
 
@@ -31,7 +30,7 @@ export default function Page() {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log('Success:', data); 
+          console.log('Success:', data);
         })
         .catch((error) => {
           console.error('Error:', error);
@@ -49,7 +48,6 @@ export default function Page() {
     }
   }, [isLoaded, isSignedIn, user]); // Watch for changes in user and isLoaded
 
-
   const [doctorName, setDoctorName] = useState('');
   const [sessionName, setSessionName] = useState('');
   const [userId, setUserId] = useState('');
@@ -58,6 +56,7 @@ export default function Page() {
   const [error, setError] = useState(null);
   const [isCreating, setIsCreating] = useState(false); // For loader in create session
   const [isAnalyzing, setIsAnalyzing] = useState(false); // For loader in analyze file
+  const [language, setLanguage] = useState('English'); // State for language selection
 
   const router = useRouter();
 
@@ -117,7 +116,7 @@ export default function Page() {
     formData.append('file', file);
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API}/counslingsession/analyze/text?sessionId=${response?.data?.id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API}/counslingsession/analyze/text?sessionId=${response?.data?.id}&language=${language}`, {
         method: 'POST',
         body: formData,
       });
@@ -211,6 +210,18 @@ export default function Page() {
           placeholder="Enter Session Name"
           className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg text-white"
         />
+      </div>
+
+      <div className="mb-6">
+        <label className="block text-lg font-semibold mb-2">Select Language:</label>
+        <select
+          value={language}
+          onChange={(e) => setLanguage(e.target.value)}
+          className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg text-white"
+        >
+          <option value="English">English</option>
+          <option value="Hindi">Hindi</option>
+        </select>
       </div>
 
       <button
