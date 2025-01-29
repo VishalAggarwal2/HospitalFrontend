@@ -46,6 +46,7 @@ export default function Navbar() {
           <Link href="/sos" className="hover:text-teal-400 transition duration-300">SOS</Link>
           <Link href="/sos/getSosList" className="hover:text-teal-400 transition duration-300">SOS List</Link>
           <Link href="/Flow" className="hover:text-teal-400 transition duration-300">How To Use</Link>
+          <Link href="/Developer" className="hover:text-teal-400 transition duration-300">Developer</Link>
           <div>
             <AlertSOSComponent />
           </div>
