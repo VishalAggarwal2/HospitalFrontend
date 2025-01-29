@@ -39,8 +39,8 @@ export default function Navbar() {
           </SignInButton>
         </SignedOut>
         <SignedIn>
+        <Link href="/domain" className="hover:text-teal-400 transition duration-300">FAQ</Link>
           <Link href="/chat" className="hover:text-teal-400 transition duration-300">Chat</Link>
-          <Link href="/domain" className="hover:text-teal-400 transition duration-300">FAQ</Link>
           <Link href="/Counslingsession" className="hover:text-teal-400 transition duration-300">Analyzer</Link>
           <Link href="/Counslingsession/mySession" className="hover:text-teal-400 transition duration-300">My Sessions</Link>
           <Link href="/sos" className="hover:text-teal-400 transition duration-300">SOS</Link>
