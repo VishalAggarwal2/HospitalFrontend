@@ -13,7 +13,7 @@ export default function Navbar() {
     <nav className="bg-gray-900 text-white p-4 flex justify-between items-center shadow-md">
       <div className="text-lg font-bold">
         <Link href="/about" className="hover:text-teal-400 transition duration-300">
-          Medicos
+          CuraBot
         </Link>
       </div>
       <div className="flex items-center space-x-6">
